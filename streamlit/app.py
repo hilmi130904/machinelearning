@@ -9,16 +9,22 @@ st.write("""
 """)
 
 # Load Model
-with open('scaler.pkl', 'rb') as f:
+models_dir = 'models'
+
+# Load Model
+with open(os.path.join(models_dir, 'sleep_quality_model.pkl'), 'rb') as f:
+    model = pickle.load(f)
+
+with open(os.path.join(models_dir, 'scaler.pkl'), 'rb') as f:
     scaler = pickle.load(f)
 
-with open('encoder.pkl', 'rb') as f:
+with open(os.path.join(models_dir, 'encoder.pkl'), 'rb') as f:
     encoder = pickle.load(f)
 
 # Assuming rfe_selector is a pickle file
-with open('rfe_selector.pkl', 'rb') as f:
+with open(os.path.join(models_dir, 'rfe_selector.pkl'), 'rb') as f:
     rfe_selector = pickle.load(f)
-
+    
 occup_lib = {
     'Accountant':0,
     'Doctor':1,
