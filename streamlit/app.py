@@ -12,9 +12,6 @@ st.write("""
 models_dir = 'models'
 
 # Load Model
-with open(os.path.join(models_dir, 'sleep_quality_model.pkl'), 'rb') as f:
-    model = pickle.load(f)
-
 with open(os.path.join(models_dir, 'scaler.pkl'), 'rb') as f:
     scaler = pickle.load(f)
 
