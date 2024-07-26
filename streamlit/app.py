@@ -9,14 +9,18 @@ st.write("""
 """)
 
 # Load Model
-with open('sleep_quality_model.pkl', 'wb') as f:
-    pickle.dump(best_model, f)
+with open('sleep_quality_model.pkl', 'rb') as f:
+    model = pickle.load(f)
 
-with open('scaler.pkl', 'wb') as f:
-    pickle.dump(scaler, f)
+with open('scaler.pkl', 'rb') as f:
+    scaler = pickle.load(f)
 
-with open('encoder.pkl', 'wb') as f:
-    pickle.dump(encoder, f)
+with open('encoder.pkl', 'rb') as f:
+    encoder = pickle.load(f)
+
+# Assuming rfe_selector is a pickle file
+with open('rfe_selector.pkl', 'rb') as f:
+    rfe_selector = pickle.load(f)
 
 occup_lib = {
     'Accountant':0,
@@ -53,7 +57,6 @@ sleep_dis_lib = {
     2:'Sleep Apnea'
 }
 
-
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -67,10 +70,8 @@ with col1:
     occupation_cat = st.selectbox('Choose Ocupation:', 
                                options = occup_lib.keys(), 
                                index = None,
-                               placeholder = "Select contact gender...")
+                               placeholder = "Select contact occupation...")
     
-    
-
 with col2:
     sleep_dur = st.number_input("Enter Sleep Duration (hour):",
                                 format="%.1f",
@@ -91,7 +92,7 @@ with col2:
     bmi_cat = st.selectbox('Choose BMI Category:', 
                         options = bmi_lib.keys(), 
                         index = None,
-                        placeholder = "Select contact gender...")
+                        placeholder = "Select contact BMI category...")
 
 with col3:
     blood_pressure = st.text_input("Enter Blood Pressure:",
@@ -119,11 +120,8 @@ if st.button("Predict"):
 
     scale_data = scaler.transform(data)
     selected_data = rfe_selector.transform(scale_data)
-    predict = dt_model.predict(selected_data)
+    predict = model.predict(selected_data)
     predict = sleep_dis_lib[predict[0]]
     st.write(f"Sleep Disorder: **{predict}**")
     st.write(f"{list(selected_data)}")
     st.write(f"{list(scale_data)}")
-    
-
-
