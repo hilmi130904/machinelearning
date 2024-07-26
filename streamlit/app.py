@@ -9,14 +9,14 @@ st.write("""
 """)
 
 # Load Model
-with open('scaler.pkl', 'rb') as file:
-    scaler = pickle.load(file)
+with open('sleep_quality_model.pkl', 'wb') as f:
+    pickle.dump(best_model, f)
 
-with open('rfe.pkl', 'rb') as file:
-    rfe_selector = pickle.load(file)
+with open('scaler.pkl', 'wb') as f:
+    pickle.dump(scaler, f)
 
-with open('dt_model.pkl', 'rb') as file:
-    dt_model = pickle.load(file)
+with open('encoder.pkl', 'wb') as f:
+    pickle.dump(encoder, f)
 
 occup_lib = {
     'Accountant':0,
